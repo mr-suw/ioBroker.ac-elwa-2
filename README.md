@@ -81,7 +81,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-- (mr-suw) polling of JSON data
+- (mr-suw) preview release which polls JSON data to ioBroker
 
 ## License
 
