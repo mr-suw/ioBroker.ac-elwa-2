@@ -128,7 +128,7 @@ class AcElwa2 extends utils.Adapter {
                 clearInterval(this.pollingInterval);
             }
             callback();
-        } catch (e) {
+        } catch () {
             callback();
         }
     }
