@@ -13,6 +13,7 @@ export default [
             "**/generated/**",
             "**/*.min.js",
             "**/build/**",
+            "reinstall.js",
         ],
     },
     {
