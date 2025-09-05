@@ -76,7 +76,6 @@ class AcElwa2 extends utils.Adapter {
             await this.setState("fan_speed", data.fan_speed, true);
             await this.setState("ctrl_errors", data.ctrl_errors, true);
             await this.setState("warnings", data.warnings, true);
-
         } catch (error) {
             this.log.error(`Error polling device: ${error}`);
             this.setState("info.connection", false, true);
@@ -85,21 +84,21 @@ class AcElwa2 extends utils.Adapter {
 
     async createStates() {
         const states = {
-            "device": { name: "Device Name", type: "string", role: "info.name" },
-            "fwversion": { name: "Firmware Version", type: "string", role: "info.firmware" },
-            "psversion": { name: "Power-Supply Version", type: "string", role: "info.firmware" },
-            "coversion": { name: "Controller Version", type: "string", role: "info.firmware" },
-            "power_elwa2": { name: "Power ELWA2", type: "number", role: "value.power", unit: "W" },
-            "power_solar": { name: "Power Solar", type: "number", role: "value.power", unit: "W" },
-            "power_max": { name: "Power Max", type: "number", role: "value.power", unit: "W" },
-            "temp1": { name: "Temperature 1", type: "number", role: "value.temperature", unit: "°C" },
-            "temp2": { name: "Temperature 2", type: "number", role: "value.temperature", unit: "°C" },
-            "date": { name: "Date", type: "string", role: "date" },
-            "loctime": { name: "Local Time", type: "string", role: "text" },
-            "temp_ps": { name: "Temperature Power-Supply", type: "number", role: "value.temperature", unit: "°C" },
-            "fan_speed": { name: "Fan Speed", type: "number", role: "value", unit: "rpm" },
-            "ctrl_errors": { name: "Control Errors", type: "number", role: "indicator.error" },
-            "warnings": { name: "Warnings", type: "number", role: "indicator.warning" },
+            device: { name: "Device Name", type: "string", role: "info.name" },
+            fwversion: { name: "Firmware Version", type: "string", role: "info.firmware" },
+            psversion: { name: "Power-Supply Version", type: "string", role: "info.firmware" },
+            coversion: { name: "Controller Version", type: "string", role: "info.firmware" },
+            power_elwa2: { name: "Power ELWA2", type: "number", role: "value.power", unit: "W" },
+            power_solar: { name: "Power Solar", type: "number", role: "value.power", unit: "W" },
+            power_max: { name: "Power Max", type: "number", role: "value.power", unit: "W" },
+            temp1: { name: "Temperature 1", type: "number", role: "value.temperature", unit: "°C" },
+            temp2: { name: "Temperature 2", type: "number", role: "value.temperature", unit: "°C" },
+            date: { name: "Date", type: "string", role: "date" },
+            loctime: { name: "Local Time", type: "string", role: "text" },
+            temp_ps: { name: "Temperature Power-Supply", type: "number", role: "value.temperature", unit: "°C" },
+            fan_speed: { name: "Fan Speed", type: "number", role: "value", unit: "rpm" },
+            ctrl_errors: { name: "Control Errors", type: "number", role: "indicator.error" },
+            warnings: { name: "Warnings", type: "number", role: "indicator.warning" },
         };
 
         for (const [id, stateDef] of Object.entries(states)) {
@@ -128,7 +127,7 @@ class AcElwa2 extends utils.Adapter {
                 clearInterval(this.pollingInterval);
             }
             callback();
-        } catch () {
+        } catch (e) {
             callback();
         }
     }
