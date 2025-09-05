@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "ac-elwa-2",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "news": {
+            "0.0.2": {
+                "en": "preview release which polls JSON data to ioBroker",
+                "de": "vorschau-Release, die JSON-Daten zu ioBroker abfragt",
+                "ru": "предварительный релиз, который опросил данные JSON для ioBroker",
+                "pt": "versão prévia que pesquisa dados JSON para ioBroker",
+                "nl": "preview release what polls JSON data to ioBroker",
+                "fr": "prévisualiser la publication des sondages JSON données à ioBroker",
+                "it": "rilascio di anteprima che sonda i dati JSON a ioBroker",
+                "es": "lanzamiento de vista previa que encuestas datos JSON a ioBroker",
+                "pl": "podgląd wydania, które sondaże JSON dane do jOBroker",
+                "uk": "попередній реліз, який обпилює дані JSON на ioBroker",
+                "zh-cn": "向 ioBroker 预览 发布 JSON 数据"
+            },
             "0.0.1": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung",
