@@ -1,4 +1,5 @@
 "use strict";
+
 // this script reads all iobroker packages from node_modules, deletes all and installs it anew
 const fs = require("fs-extra");
 const path = require("path");
