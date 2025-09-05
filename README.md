@@ -21,11 +21,6 @@ Query the status info of AC ELWA 2.
 
 This library is not affiliated with MyPv. It is an independent project developed to provide tools for interacting with AC ELWA 2 featuring integrated web interface. Any trademarks or product names mentioned are the property of their respective owners.
 
-### Best Practices
-
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
-
 ### Scripts in `package.json`
 
 Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
