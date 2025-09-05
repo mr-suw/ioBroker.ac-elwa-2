@@ -22,3 +22,5 @@ doc/
 GEMINI.md
 iob
 iobroker
+iobroker-data/
+.DS_Store

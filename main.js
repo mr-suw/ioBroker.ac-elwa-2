@@ -7,6 +7,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
+const axios = require("axios");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -25,63 +26,96 @@ class AcElwa2 extends utils.Adapter {
         // this.on("objectChange", this.onObjectChange.bind(this));
         // this.on("message", this.onMessage.bind(this));
         this.on("unload", this.onUnload.bind(this));
+
+        this.pollingInterval = null;
     }
 
     /**
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        // Initialize your adapter here
+        // Reset the connection indicator during startup
+        this.setState("info.connection", false, true);
 
-        // The adapters config (in the instance object everything under the attribute "native") is accessible via
-        // this.config:
-        this.log.info("config option1: " + this.config.option1);
-        this.log.info("config option2: " + this.config.option2);
+        if (!this.config.ipAddress) {
+            this.log.error("IP address is not set in the adapter configuration!");
+            return;
+        }
 
-        /*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-        await this.setObjectNotExistsAsync("testVariable", {
-            type: "state",
-            common: {
-                name: "testVariable",
-                type: "boolean",
-                role: "indicator",
-                read: true,
-                write: true,
-            },
-            native: {},
-        });
+        if (!this.config.pollingTime || this.config.pollingTime < 10) {
+            this.log.warn("Polling time is set to less than 10 seconds. Setting to 10 seconds.");
+            this.config.pollingTime = 10;
+        }
 
-        // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-        this.subscribeStates("testVariable");
-        // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-        // this.subscribeStates("lights.*");
-        // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-        // this.subscribeStates("*");
+        await this.createStates();
 
-        /*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-        // the variable testVariable is set to true as command (ack=false)
-        await this.setStateAsync("testVariable", true);
+        this.pollDevice();
+        this.pollingInterval = setInterval(() => this.pollDevice(), this.config.pollingTime * 1000);
+    }
 
-        // same thing, but the value is flagged "ack"
-        // ack should be always set to true if the value is received from or acknowledged from the target system
-        await this.setStateAsync("testVariable", { val: true, ack: true });
+    async pollDevice() {
+        const url = `http://${this.config.ipAddress}/data.jsn`;
+        try {
+            const response = await axios.get(url);
+            const data = response.data;
 
-        // same thing, but the state is deleted after 30s (getState will return null afterwards)
-        await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+            await this.setState("info.connection", true, true);
 
-        // examples for the checkPassword/checkGroup functions
-        let result = await this.checkPasswordAsync("admin", "iobroker");
-        this.log.info("check user admin pw iobroker: " + result);
+            await this.setState("device", data.device, true);
+            await this.setState("fwversion", data.fwversion, true);
+            await this.setState("psversion", data.psversion, true);
+            await this.setState("coversion", data.coversion, true);
+            await this.setState("power_elwa2", data.power_elwa2, true);
+            await this.setState("power_solar", data.power_solar, true);
+            await this.setState("power_max", data.power_max, true);
+            await this.setState("temp1", data.temp1 / 10, true);
+            await this.setState("temp2", data.temp2 / 10, true);
+            await this.setState("date", data.date, true);
+            await this.setState("loctime", data.loctime, true);
+            await this.setState("temp_ps", data.temp_ps / 10, true);
+            await this.setState("fan_speed", data.fan_speed, true);
+            await this.setState("ctrl_errors", data.ctrl_errors, true);
+            await this.setState("warnings", data.warnings, true);
 
-        result = await this.checkGroupAsync("admin", "admin");
-        this.log.info("check group user admin group admin: " + result);
+        } catch (error) {
+            this.log.error(`Error polling device: ${error}`);
+            this.setState("info.connection", false, true);
+        }
+    }
+
+    async createStates() {
+        const states = {
+            "device": { name: "Device Name", type: "string", role: "info.name" },
+            "fwversion": { name: "Firmware Version", type: "string", role: "info.firmware" },
+            "psversion": { name: "Power-Supply Version", type: "string", role: "info.firmware" },
+            "coversion": { name: "Controller Version", type: "string", role: "info.firmware" },
+            "power_elwa2": { name: "Power ELWA2", type: "number", role: "value.power", unit: "W" },
+            "power_solar": { name: "Power Solar", type: "number", role: "value.power", unit: "W" },
+            "power_max": { name: "Power Max", type: "number", role: "value.power", unit: "W" },
+            "temp1": { name: "Temperature 1", type: "number", role: "value.temperature", unit: "°C" },
+            "temp2": { name: "Temperature 2", type: "number", role: "value.temperature", unit: "°C" },
+            "date": { name: "Date", type: "string", role: "date" },
+            "loctime": { name: "Local Time", type: "string", role: "text" },
+            "temp_ps": { name: "Temperature Power-Supply", type: "number", role: "value.temperature", unit: "°C" },
+            "fan_speed": { name: "Fan Speed", type: "number", role: "value", unit: "rpm" },
+            "ctrl_errors": { name: "Control Errors", type: "number", role: "indicator.error" },
+            "warnings": { name: "Warnings", type: "number", role: "indicator.warning" },
+        };
+
+        for (const [id, stateDef] of Object.entries(states)) {
+            await this.setObjectNotExistsAsync(id, {
+                type: "state",
+                common: {
+                    name: stateDef.name,
+                    type: stateDef.type,
+                    role: stateDef.role,
+                    unit: stateDef.unit,
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
+        }
     }
 
     /**
@@ -90,34 +124,14 @@ class AcElwa2 extends utils.Adapter {
      */
     onUnload(callback) {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            // clearInterval(interval1);
-
+            if (this.pollingInterval) {
+                clearInterval(this.pollingInterval);
+            }
             callback();
         } catch (e) {
             callback();
         }
     }
-
-    // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-    // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-    // /**
-    //  * Is called if a subscribed object changes
-    //  * @param {string} id
-    //  * @param {ioBroker.Object | null | undefined} obj
-    //  */
-    // onObjectChange(id, obj) {
-    //     if (obj) {
-    //         // The object was changed
-    //         this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-    //     } else {
-    //         // The object was deleted
-    //         this.log.info(`object ${id} deleted`);
-    //     }
-    // }
 
     /**
      * Is called if a subscribed state changes
@@ -133,24 +147,6 @@ class AcElwa2 extends utils.Adapter {
             this.log.info(`state ${id} deleted`);
         }
     }
-
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  * @param {ioBroker.Message} obj
-    //  */
-    // onMessage(obj) {
-    //     if (typeof obj === "object" && obj.message) {
-    //         if (obj.command === "send") {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info("send command");
-
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-    //         }
-    //     }
-    // }
 }
 
 if (require.main !== module) {
