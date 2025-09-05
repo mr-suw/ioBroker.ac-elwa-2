@@ -4,9 +4,6 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.ac-elwa-2.svg)](https://www.npmjs.com/package/iobroker.ac-elwa-2)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.ac-elwa-2.svg)](https://www.npmjs.com/package/iobroker.ac-elwa-2)
-![Number of Installations](https://iobroker.live/badges/ac-elwa-2-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/ac-elwa-2-stable.svg)
-
 [![NPM](https://nodei.co/npm/iobroker.ac-elwa-2.png?downloads=true)](https://nodei.co/npm/iobroker.ac-elwa-2/)
 
 **Tests:** ![Test and Release](https://github.com/mr-suw/ioBroker.ac-elwa-2/workflows/Test%20and%20Release/badge.svg)
@@ -75,6 +72,10 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+- compliant fixes
 
 ### 0.0.2 (2025-09-05)
 
