@@ -73,13 +73,13 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
     ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.3 (2025-09-05)
 
 - compliant fixes
 
 ### 0.0.2 (2025-09-05)
 
-- (mr-suw) preview release which polls JSON data to ioBroker
+- preview release which polls JSON data to ioBroker
 
 ## License
 

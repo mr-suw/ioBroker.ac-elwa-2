@@ -1,6 +1,6 @@
 {
   "name": "iobroker.ac-elwa-2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "query the status info of AC ELWA 2",
   "author": {
     "name": "mr-suw",
