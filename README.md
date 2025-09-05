@@ -1,4 +1,4 @@
-![Logo](admin/ac-elwa-2.png)
+<img src="admin/ac-elwa-2.png" alt="Logo" width="30%"/>
 
 # ioBroker.ac-elwa-2
 
@@ -75,6 +75,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
 ### 0.0.2 (2025-09-05)
 
 - (mr-suw) preview release which polls JSON data to ioBroker
