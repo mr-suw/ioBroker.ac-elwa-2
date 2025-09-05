@@ -49,8 +49,10 @@ Since you installed the release script, you can create a new
 release simply by calling:
 
 ```bash
-npm run release
+npm run release <releaseType> -- --dry
 ```
+
+releaseType: major, minor, patch, prerelease
 
 Additional command line options for the release script are explained in the
 [release-script documentation](https://github.com/AlCalzone/release-script#command-line).
