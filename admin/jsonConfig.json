@@ -2,15 +2,25 @@
     "i18n": true,
     "type": "panel",
     "items": {
-        "option1": {
-            "type": "checkbox",
-            "label": "option1",
-            "newLine": true
-        },
-        "option2": {
+        "ipAddress": {
             "type": "text",
-            "label": "option2",
-            "newLine": true
+            "label": "IP Address",
+            "newLine": true,
+            "xs": 12,
+            "sm": 6,
+            "md": 4,
+            "lg": 3,
+            "xl": 2
+        },
+        "pollingTime": {
+            "type": "number",
+            "label": "Polling time in seconds",
+            "newLine": true,
+            "xs": 12,
+            "sm": 6,
+            "md": 4,
+            "lg": 3,
+            "xl": 2
         }
     }
 }

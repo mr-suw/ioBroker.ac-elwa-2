@@ -1,5 +1,5 @@
 {
     "ac-elwa-2 adapter settings": "ac-elwa-2的适配器设置",
-    "option1": "选项1",
-    "option2": "选项2"
+    "IP Address": "IP地址",
+    "Polling time in seconds": "几秒钟内的投票时间"
 }

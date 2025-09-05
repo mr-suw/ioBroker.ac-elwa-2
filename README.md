@@ -13,38 +13,13 @@
 
 ## ac-elwa-2 adapter for ioBroker
 
-query the status info of AC ELWA 2.
+Query the status info of AC ELWA 2.
 
 ## Developer manual
 
 ### DISCLAIMER
 
 This library is not affiliated with MyPv. It is an independent project developed to provide tools for interacting with AC ELWA 2 featuring integrated web interface. Any trademarks or product names mentioned are the property of their respective owners.
-
-### Getting started
-
-You are almost done, only a few steps left:
-
-1. Create a new repository on GitHub with the name `ioBroker.ac-elwa-2`
-1. Initialize the current folder as a new git repository:
-    ```bash
-    git init -b main
-    git add .
-    git commit -m "Initial commit"
-    ```
-1. Link your local repository with the one on GitHub:
-
-    ```bash
-    git remote add origin https://github.com/mr-suw/ioBroker.ac-elwa-2
-    ```
-
-1. Push all files to the GitHub repo:
-    ```bash
-    git push origin main
-    ```
-1. Add a new secret under https://github.com/mr-suw/ioBroker.ac-elwa-2/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
-
-1. Head over to [main.js](main.js) and start programming!
 
 ### Best Practices
 
@@ -64,18 +39,6 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
 | `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
 | `release` | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details. |
-
-### Writing tests
-
-When done right, testing code is invaluable, because it gives you the
-confidence to change your code while knowing exactly if and when
-something breaks. A good read on the topic of test-driven development
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92.
-Although writing tests before the code might seem strange at first, but it has very
-clear upsides.
-
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
 
 ### Publishing the adapter
 
@@ -118,7 +81,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-- (mr-suw) initial release
+- (mr-suw) polling of JSON data
 
 ## License
 

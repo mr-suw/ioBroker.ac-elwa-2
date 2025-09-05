@@ -1,5 +1,5 @@
 {
     "ac-elwa-2 adapter settings": "Paramètres d'adaptateur pour ac-elwa-2",
-    "option1": "option1",
-    "option2": "Option2"
+    "IP Address": "Adresse IP",
+    "Polling time in seconds": "Temps de scrutin en quelques secondes"
 }
