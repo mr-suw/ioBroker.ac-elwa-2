@@ -83,7 +83,7 @@ export default [
                     ignoreRestSiblings: true,
                     argsIgnorePattern: "^_",
                     varsIgnorePattern: "^[_$A-Z]", // Ignoriere _, $ und Großbuchstaben
-                    args: "none",
+                    caughtErrorsIgnorePattern: "^_",
                 },
             ],
             "no-var": "error",
