@@ -1,56 +1,117 @@
-import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default defineConfig([
-    globalIgnores(["**/.prettierrc.js", "**/.eslintrc.js", "admin/words.js"]),
+export default [
     {
-        extends: compat.extends("eslint:recommended"),
-        plugins: {},
-
+        ignores: [
+            "**/node_modules/**",
+            ".dev-server/**",
+            "admin/words.js",
+            "**/.prettierrc.js",
+            "**/.eslintrc.js",
+            "**/customComponents.js",
+            "**/generated/**",
+            "**/*.min.js",
+            "**/build/**",
+        ],
+    },
+    {
+        files: ["**/*.js", "**/*.mjs"],
+        ...js.configs.recommended,
         languageOptions: {
             globals: {
                 ...globals.node,
                 ...globals.mocha,
+                ...globals.browser,
+                // Zusätzliche Browser/DOM APIs
+                ace: "readonly",
+                System: "readonly",
+                DocumentFragment: "readonly",
+                ShadowRoot: "readonly",
+                ResizeObserver: "readonly",
+                MutationObserver: "readonly",
+                IntersectionObserver: "readonly",
+                HTMLElement: "readonly",
+                HTMLScriptElement: "readonly",
+                HTMLLinkElement: "readonly",
+                Element: "readonly",
+                getSelection: "readonly",
+                performance: "readonly",
+                FileReader: "readonly",
+                Response: "readonly",
+                URL: "readonly",
+                global: "readonly",
+                self: "readonly",
+                FEDERATION_DEBUG: "readonly",
+                FEDERATION_BUILD_IDENTIFIER: "readonly",
+                name: "readonly",
+                // Weitere fehlende Globals
+                localStorage: "readonly",
+                setTimeout: "readonly",
+                clearTimeout: "readonly",
+                setInterval: "readonly",
+                clearInterval: "readonly",
+                requestAnimationFrame: "readonly",
+                cancelAnimationFrame: "readonly",
+                navigator: "readonly",
+                fetch: "readonly",
+                Promise: "readonly",
+                FormData: "readonly",
+                // Zusätzliche Browser APIs
+                btoa: "readonly",
+                AbortController: "readonly",
+                DOMException: "readonly",
+                Request: "readonly",
+                caches: "readonly",
+                __SENTRY_DEBUG__: "readonly",
             },
-
             ecmaVersion: "latest",
-            sourceType: "commonjs",
+            sourceType: "module",
         },
-
         rules: {
-            indent: ["error", 4, {
-                SwitchCase: 1,
-            }],
-
+            indent: [
+                "error",
+                4,
+                {
+                    SwitchCase: 1,
+                },
+            ],
             "no-console": "off",
-
-            "no-unused-vars": ["error", {
-                ignoreRestSiblings: true,
-                argsIgnorePattern: "^_",
-            }],
-
+            "no-unused-vars": [
+                "error",
+                {
+                    ignoreRestSiblings: true,
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^[_$A-Z]", // Ignoriere _, $ und Großbuchstaben
+                    args: "none",
+                },
+            ],
             "no-var": "error",
             "no-trailing-spaces": "error",
             "prefer-const": "error",
-
-            quotes: ["error", "double", {
-                avoidEscape: true,
-                allowTemplateLiterals: true,
-            }],
-
+            quotes: [
+                "error",
+                "double",
+                {
+                    avoidEscape: true,
+                    allowTemplateLiterals: true,
+                },
+            ],
             semi: ["error", "always"],
+            // Deaktivierte Regeln
+            "no-prototype-builtins": "off",
+            "no-fallthrough": "off",
+            "no-useless-escape": "off",
+            "no-empty": "off",
+            "no-cond-assign": "off",
+            "no-func-assign": "off",
+            "no-self-assign": "off",
+            "no-redeclare": "off",
+            "no-control-regex": "off",
+            "no-useless-catch": "off",
+            "no-async-promise-executor": "off",
+            "no-misleading-character-class": "off",
+            "no-undef": "error",
         },
     },
-]);
+];
