@@ -83,6 +83,26 @@ class AcElwa2 extends utils.Adapter {
     }
 
     async createStates() {
+        await this.setObjectNotExistsAsync("info", {
+            type: "channel",
+            common: {
+                name: "Information",
+            },
+            native: {},
+        });
+
+        await this.setObjectNotExistsAsync("info.connection", {
+            type: "state",
+            common: {
+                name: "Connection",
+                type: "boolean",
+                role: "indicator.connected",
+                read: true,
+                write: false,
+            },
+            native: {},
+        });
+
         const states = {
             device: { name: "Device Name", type: "string", role: "info.name" },
             fwversion: { name: "Firmware Version", type: "string", role: "info.firmware" },
