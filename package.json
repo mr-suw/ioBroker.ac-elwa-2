@@ -46,7 +46,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "esm": "^3.2.25",
-    "iobroker.js-controller": "^3.3.10",
+    "iobroker.js-controller": "^7.1.0",
     "mocha": "^11.7.5",
     "prettier": "^3.7.4",
     "proxyquire": "^2.1.3",
